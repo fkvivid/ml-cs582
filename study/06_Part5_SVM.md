@@ -1,22 +1,7 @@
 # CS582 Machine Learning — Ultimate Study Guide
 ## Lesson 5: Support Vector Machines (+ Lab 5)
 
-> **Sources:** `5-Support Vector Machines.ppt`, `Lab_5_SVM.docx` (= Marsland Problems 8.1–style), Marsland Ch. 8.
->
-> Lab 5 numbers (margin, support vectors, \(\Phi_1\), circle lift) were recomputed in code.
->
-> **If you only read this file for Lesson 5, you should be able to answer the exam.**
-
----
-
-## How to use
-
-1. Read §§1–8 (intuition → margin math → dual → kernels → algorithm → multi-class → pros/cons).
-2. Work Lab 5 solutions in §9 **by hand** once.
-3. Memorize the formula box and traps.
-4. Drill `07_L4L5_QuestionBank_FormulaSheet.md`.
-
-Expect on the exam: **why SVM beats “any” Perceptron line, margin & support vectors, \(\min \tfrac12 w^Tw\) with \(t_i(w^Tx_i+b)\ge 1\), dual \(w^*=\sum\lambda_i t_i x_i\), kernel trick, name 3 kernels, advantages (global min, max margin, sparse SVs), disadvantages (kernel choice, scale, binary), multi-class one-vs-rest.**
+> Everything you need for Lesson 5 is in **this document**. Lab numbers (margin, support vectors, \(\Phi_1\), circle lift) were recomputed in code.
 
 ---
 
@@ -28,7 +13,7 @@ Expect on the exam: **why SVM beats “any” Perceptron line, margin & support 
 - Introduced by **Vapnik (1992)**; popular because strong results on **reasonably sized** data.
 - **Does not scale well** to huge training sets (QP cost grows badly with \(n\)).
 - SVM also reformulates classification so we can say which of two “perfect training” lines is **better** → **maximum margin**.
-- Built on **VC theory** ideas (capacity + margin → better generalization).
+- Built on **VC (Vapnik–Chervonenkis)** ideas: capacity + **margin** → better generalization.
 
 ---
 
@@ -361,7 +346,7 @@ A plane such as \(\boxed{z = 5}\) (i.e. \(0\cdot x_1 + 0\cdot x_2 + 1\cdot z - 5
 8. Soft margin / role of \(C\).
 9. Pros/cons list; multi-class one-vs-rest.
 10. Contrast **Perceptron vs SVM** on the same separable data (Lab Q2).
-11. Connect to Lesson 4: **VC / capacity**; higher dim via kernels like the XOR trick.
+11. Connect to **VC / capacity**: larger margin limits effective capacity; kernels raise dimension like the XOR trick.
 
 ---
 
@@ -396,6 +381,4 @@ A plane such as \(\boxed{z = 5}\) (i.e. \(0\cdot x_1 + 0\cdot x_2 + 1\cdot z - 5
 7. SVM = **global** min; MLP = often **local** min.
 8. More features via \(\phi\) can help separability but kernels avoid explicit cost — still choose kernel carefully (overfitting / validation).
 
----
 
-*Lesson 5 complete. Use `07_L4L5_QuestionBank_FormulaSheet.md` for drills.*

@@ -1,22 +1,7 @@
 # CS582 Machine Learning — Ultimate Study Guide
 ## Lesson 4: Dimensionality Reduction & VC Dimension (+ Lab 4)
 
-> **Sources:** `4-Dimensionality_Reduction_VC_Dimension.ppt`, `Lab_4_Dim_Reduction_MLP.docx`, Marsland textbook §§2.1.2, Ch. 6 (LDA/PCA), lecture notes on VC dimension.
->
-> Every number that can be checked (hypersphere volumes, LDA/PCA formulas, VC for 2D lines) was verified against the book and slides.
->
-> **If you only read this file for Lesson 4, you should be able to answer the exam.**
-
----
-
-## How to use
-
-1. Read §§1–8 in order (concepts → math → algorithms → VC).
-2. Memorize the **Exam angles** and the **formula box** at the end.
-3. Do Lab 4 answers in §9 out loud.
-4. Drill companion file `07_L4L5_QuestionBank_FormulaSheet.md`.
-
-Instructor style: short “why / what / how,” plus hand calculations. For this lecture expect: **curse of dimensionality (volume table + intuition), 3 ways to reduce dimensions, LDA vs PCA, maximize \(S_B/S_W\), PCA steps (center → covariance → eigenvectors), VC dimension / shatter / perceptron VC = 3 in 2D, link to SVM.**
+> Everything you need for Lesson 4 is in **this document**. Numbers (hypersphere volumes, LDA/PCA, VC for 2D lines) were checked against the course materials.
 
 ---
 
@@ -228,49 +213,80 @@ x = np.dot(np.transpose(evecs), np.transpose(data))   # project
 
 ---
 
-# 6. VC Dimension — learning capacity
+# 6. What “VC” means (Vapnik–Chervonenkis dimension)
 
-### Motivation
-- How many things can a model classify? → **capacity**
-- How well can it **generalize**?
-- **VC dimension** (Vapnik–Chervonenkis, early 90s) measures **learning capacity**.
+### The name
+**VC** stands for **Vapnik–Chervonenkis** (Vladimir Vapnik and Alexey Chervonenkis, early 1990s).
 
-### Definitions (memorize)
+**VC dimension** (often written **VCd**) is a **number** that measures the **learning capacity** of a model class:
+- How flexible is this classifier?
+- Roughly: **how many points can this model perfectly memorize for any labeling?**
 
-**Shatter:** A model \(f\) **shatters** a set of points if **for every possible labeling** of those points, there exist parameters so \(f\) classifies them with **zero error**.
+It is **not** “volume of a cube,” not “validation curve,” and not a dataset size. It is a property of the **hypothesis class** (e.g. “all straight lines in 2D,” “all perceptrons with \(m\) inputs”).
 
-**VC dimension:** cardinality of the **largest** set of points that the hypothesis class can shatter.  
-Formally: largest \(D\) such that **some** set of \(D\) points can be shattered.
+### Why we care
+Two natural questions after learning classifiers:
+1. How many different labelings can this model realize? → **capacity**
+2. Will it **generalize**, or only memorize?
 
-Set-family version (slides): \(H\) shatters \(C\) if \(H\cap C\) contains **all subsets** of \(C\) (\(H\cap C \supseteq 2^C\)).
+A model with **huge** VC can fit almost anything (risk of overfitting). A model with **tiny** VC is rigid (may underfit). SVM later uses related ideas: **large margin** limits effective capacity and helps generalization.
 
-### Classic example: lines in 2D (perceptron)
+### Shatter (the key word)
 
-- **3 points** (not collinear): every labeling can be separated by a straight line → **shattered**.
-- **4 points** in a square with diagonal labels (XOR pattern): **no** single line works → cannot shatter 4.
-- ⇒ For linear classifiers in 2D: \(\boxed{\mathrm{VC} = 3}\)
+Take a fixed set of points in space. Assign every point a label \(+\) or \(-\).
 
-(Only 3 of the \(2^3=8\) labelings shown on the slide — enough to illustrate.)
+A model class **shatters** that set if:
 
-### Neural nets (slides — results, not full derivation)
+> For **every** possible labeling of those points, there exist parameters (weights, thresholds, …) so the model classifies **all** of them correctly (zero training error).
+
+If there are \(n\) points, there are \(2^n\) possible labelings. Shattering means the model can realize **all** \(2^n\) of them.
+
+### VC dimension (definition)
+
+\[
+\boxed{\text{VC dimension} = \text{size of the largest set of points that the model can shatter}}
+\]
+
+More formally: the largest integer \(D\) such that **there exists** some set of \(D\) points that can be shattered.
+
+- To claim VC \(\ge D\): show **one** arrangement of \(D\) points that can be shattered.
+- To claim VC \(= D\): also show that **no** set of \(D+1\) points can be shattered.
+
+Set-family wording from slides: family \(H\) shatters set \(C\) if \(H\cap C\) contains every subset of \(C\) (\(H\cap C \supseteq 2^C\)).
+
+### Classic example: straight lines in 2D (same as a 2-input perceptron)
+
+**3 points** (not on one line):
+- You can always draw a straight line that separates \(+\) from \(-\) for any labeling → **shattered**.
+- So VC \(\ge 3\).
+
+**4 points** (e.g. corners of a square with **diagonal** same labels — XOR pattern):
+- No single straight line separates that labeling → that set is **not** shattered.
+- In fact no set of 4 points can be shattered by lines in 2D.
+- So VC \(\le 3\).
+
+Therefore for **linear classifiers in 2D**:
+\[
+\boxed{\mathrm{VC} = 3}
+\]
+
+### Neural-net results from the lecture (no full derivation)
 
 **Perceptron**
-- Capacity \(C = 2^N\) if \(N < m\); otherwise less than \(2^N\).
-- \(\mathrm{VCd} = m\) = dimension of the input vector (= number of weights \(W\) for a single neuron with bias counted appropriately).
-- \(\mathrm{VCd}\) is \(\mathbf{O}(W)\).
-- Slide warning: if you use **more training examples than VCd**, learning/generalization behavior changes (capacity vs sample size).
+- If \(N\) training patterns and \(N < m\) (input dimension), capacity can reach \(C = 2^N\); otherwise capacity is less than \(2^N\).
+- \(\mathrm{VCd} = m\) (input dimension). Since weights \(W\) match that scale, \(\mathrm{VCd}\) is \(\mathbf{O}(W)\).
+- Using far more training points than VCd changes the learning/generalization story (capacity vs sample size).
 
 **MLP**
 \[
 \mathrm{VCd} \le 2\,(W_{\text{input layer}} + W_{\text{hidden layer}})\,\log V
 \]
-where \(V\) = number of neurons.
+where \(V\) = number of neurons. Rough training-size scale for a perceptron: about \(m\log m\).
 
-- Training-pattern need (order-of-magnitude, perceptron): about \(m\log m\).
-- Full generalization theory postponed; **SVM is built on VC ideas** (next lecture: **maximum margin**).
+**Link to SVM:** SVM is built on VC thinking — choose the separator with the **largest margin** to control capacity and improve generalization.
 
 ### Exam one-liner
-> VC dimension = size of the largest set the model can **shatter**. 2D linear separator: **VC = 3**. Larger VC → more capacity, higher overfitting risk unless you have enough data / regularization (SVM maximizes margin).
+> **VC** = Vapnik–Chervonenkis. **VC dimension** = largest number of points the model can **shatter** (fit every labeling). For a straight line in 2D, **VC = 3**. Bigger VC → more capacity → more overfitting risk unless you control it (e.g. max-margin SVM).
 
 ---
 
@@ -335,28 +351,11 @@ Write something like:
 - DR helps **training speed**, **memory**, **visualization**, and often **generalization** when \(N\) is not huge compared to \(d\).
 - I will validate DR choice with a **validation set** (as with MLP early stopping) — wrong reduction can throw away signal.
 
----
 
-*Lesson 4 complete. Next: `06_Part5_SVM.md`.*
 # CS582 Machine Learning — Ultimate Study Guide
 ## Lesson 5: Support Vector Machines (+ Lab 5)
 
-> **Sources:** `5-Support Vector Machines.ppt`, `Lab_5_SVM.docx` (= Marsland Problems 8.1–style), Marsland Ch. 8.
->
-> Lab 5 numbers (margin, support vectors, \(\Phi_1\), circle lift) were recomputed in code.
->
-> **If you only read this file for Lesson 5, you should be able to answer the exam.**
-
----
-
-## How to use
-
-1. Read §§1–8 (intuition → margin math → dual → kernels → algorithm → multi-class → pros/cons).
-2. Work Lab 5 solutions in §9 **by hand** once.
-3. Memorize the formula box and traps.
-4. Drill `07_L4L5_QuestionBank_FormulaSheet.md`.
-
-Expect on the exam: **why SVM beats “any” Perceptron line, margin & support vectors, \(\min \tfrac12 w^Tw\) with \(t_i(w^Tx_i+b)\ge 1\), dual \(w^*=\sum\lambda_i t_i x_i\), kernel trick, name 3 kernels, advantages (global min, max margin, sparse SVs), disadvantages (kernel choice, scale, binary), multi-class one-vs-rest.**
+> Everything you need for Lesson 5 is in **this document**. Lab numbers (margin, support vectors, \(\Phi_1\), circle lift) were recomputed in code.
 
 ---
 
@@ -368,7 +367,7 @@ Expect on the exam: **why SVM beats “any” Perceptron line, margin & support 
 - Introduced by **Vapnik (1992)**; popular because strong results on **reasonably sized** data.
 - **Does not scale well** to huge training sets (QP cost grows badly with \(n\)).
 - SVM also reformulates classification so we can say which of two “perfect training” lines is **better** → **maximum margin**.
-- Built on **VC theory** ideas (capacity + margin → better generalization).
+- Built on **VC (Vapnik–Chervonenkis)** ideas: capacity + **margin** → better generalization.
 
 ---
 
@@ -701,7 +700,7 @@ A plane such as \(\boxed{z = 5}\) (i.e. \(0\cdot x_1 + 0\cdot x_2 + 1\cdot z - 5
 8. Soft margin / role of \(C\).
 9. Pros/cons list; multi-class one-vs-rest.
 10. Contrast **Perceptron vs SVM** on the same separable data (Lab Q2).
-11. Connect to Lesson 4: **VC / capacity**; higher dim via kernels like the XOR trick.
+11. Connect to **VC / capacity**: larger margin limits effective capacity; kernels raise dimension like the XOR trick.
 
 ---
 
@@ -736,14 +735,11 @@ A plane such as \(\boxed{z = 5}\) (i.e. \(0\cdot x_1 + 0\cdot x_2 + 1\cdot z - 5
 7. SVM = **global** min; MLP = often **local** min.
 8. More features via \(\phi\) can help separability but kernels avoid explicit cost — still choose kernel carefully (overfitting / validation).
 
----
 
-*Lesson 5 complete. Use `07_L4L5_QuestionBank_FormulaSheet.md` for drills.*
 # CS582 — Lessons 4 & 5 Companion
 ## Question Bank · Combined Formula Sheet · Traps
 
-> Use after reading `05_Part4_DimReduction_VC.md` and `06_Part5_SVM.md`.
-> Answer out loud with books closed. Check yourself against the part files.
+> Self-contained drill sheet for Lessons 4 and 5. Answer out loud with notes closed.
 
 ---
 
@@ -782,17 +778,17 @@ A plane such as \(\boxed{z = 5}\) (i.e. \(0\cdot x_1 + 0\cdot x_2 + 1\cdot z - 5
 10. **Link PCA ↔ MLP?**  
     Linear autoencoder bottleneck ≈ PCA compression.
 
-11. **Define shatter and VC dimension.**  
-    Shatter = all \(2^{|S|}\) labelings realizable with zero error. VC = size of largest shatterable set.
+11. **What does VC stand for? Define shatter and VC dimension.**  
+    **VC = Vapnik–Chervonenkis.** Shatter = all \(2^{|S|}\) labelings realizable with zero error. VC dimension = size of the largest shatterable set (capacity of the model class).
 
 12. **VC of a line in 2D?**  
-    3 (can shatter 3 points; not all 4-point XOR patterns).
+    3 (can shatter 3 points; cannot shatter 4 in the XOR/diagonal pattern).
 
 13. **Perceptron VCd?**  
     \(m\) = input dimension; order \(O(W)\).
 
-14. **Why mention VC before SVM?**  
-    SVM built on VC / margin ideas: max margin → better capacity control / generalization.
+14. **Why does SVM care about VC?**  
+    Max margin controls effective capacity → better generalization than “any” separating line.
 
 15. **Feature selection complexity?**  
     \(2^d-1\) subsets → usually greedy search.
@@ -902,3 +898,6 @@ A plane such as \(\boxed{z = 5}\) (i.e. \(0\cdot x_1 + 0\cdot x_2 + 1\cdot z - 5
 **Drill 5:** VC shatter definition + why 2D line has VC = 3.
 
 If you can do all five without notes, Lessons 4–5 are exam-ready.
+
+**Oral answer for “What is VC?”:**  
+Vapnik–Chervonenkis dimension — a number measuring model capacity: the largest number of points the model can shatter (classify correctly under every possible labeling). For straight lines in 2D it is 3.

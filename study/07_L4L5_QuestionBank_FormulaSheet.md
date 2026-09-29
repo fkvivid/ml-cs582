@@ -1,8 +1,7 @@
 # CS582 — Lessons 4 & 5 Companion
 ## Question Bank · Combined Formula Sheet · Traps
 
-> Use after reading `05_Part4_DimReduction_VC.md` and `06_Part5_SVM.md`.
-> Answer out loud with books closed. Check yourself against the part files.
+> Self-contained drill sheet for Lessons 4 and 5. Answer out loud with notes closed.
 
 ---
 
@@ -41,17 +40,17 @@
 10. **Link PCA ↔ MLP?**  
     Linear autoencoder bottleneck ≈ PCA compression.
 
-11. **Define shatter and VC dimension.**  
-    Shatter = all \(2^{|S|}\) labelings realizable with zero error. VC = size of largest shatterable set.
+11. **What does VC stand for? Define shatter and VC dimension.**  
+    **VC = Vapnik–Chervonenkis.** Shatter = all \(2^{|S|}\) labelings realizable with zero error. VC dimension = size of the largest shatterable set (capacity of the model class).
 
 12. **VC of a line in 2D?**  
-    3 (can shatter 3 points; not all 4-point XOR patterns).
+    3 (can shatter 3 points; cannot shatter 4 in the XOR/diagonal pattern).
 
 13. **Perceptron VCd?**  
     \(m\) = input dimension; order \(O(W)\).
 
-14. **Why mention VC before SVM?**  
-    SVM built on VC / margin ideas: max margin → better capacity control / generalization.
+14. **Why does SVM care about VC?**  
+    Max margin controls effective capacity → better generalization than “any” separating line.
 
 15. **Feature selection complexity?**  
     \(2^d-1\) subsets → usually greedy search.
@@ -161,3 +160,6 @@
 **Drill 5:** VC shatter definition + why 2D line has VC = 3.
 
 If you can do all five without notes, Lessons 4–5 are exam-ready.
+
+**Oral answer for “What is VC?”:**  
+Vapnik–Chervonenkis dimension — a number measuring model capacity: the largest number of points the model can shatter (classify correctly under every possible labeling). For straight lines in 2D it is 3.
