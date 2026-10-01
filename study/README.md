@@ -21,12 +21,26 @@ Ultimate exam review built from **your course slides, labs, and Marsland textboo
 | [07_L4L5_QuestionBank_FormulaSheet.md](07_L4L5_QuestionBank_FormulaSheet.md) | Practice + formulas + traps (L4–L5) |
 | [STUDY_GUIDE_L4-L5_DR_VC_SVM.md](STUDY_GUIDE_L4-L5_DR_VC_SVM.md) | Full combined L4–L5 guide |
 
+## Lessons 6–12 (Unsup · Search/Agents · GA · RL · Trees/Bayes · DL)
+
+| File | Contents |
+|------|----------|
+| [08_Part6_Unsupervised_Learning.md](08_Part6_Unsupervised_Learning.md) | Lecture 6 — k-means, competitive learning, SOM + Lab 6 |
+| [09_Part7_Optimization_Search_Agents.md](09_Part7_Optimization_Search_Agents.md) | Lecture 7 — Search (BFS/DFS/A*), PEAS, agents |
+| [10_Part8_Genetic_Algorithms.md](10_Part8_Genetic_Algorithms.md) | Lecture 8 — GA + Lab 8 (MP3/CD, TSP) + Final GA walkthrough |
+| [11_Part9_Reinforcement_Learning.md](11_Part9_Reinforcement_Learning.md) | Lecture 9 — Policy/value, ε-greedy, TD, Q-learning |
+| [12_Part10_DecisionTrees_Bayes.md](12_Part10_DecisionTrees_Bayes.md) | Lecture 10 — Entropy, IG, Gini, RF + Bayes / Naive Bayes |
+| [13_Part12_Deep_Learning.md](13_Part12_Deep_Learning.md) | Lecture 12 — AE, sparsity, RBM/DBN, CNN, ReLU, pool, FC |
+| [14_Final_QuestionBank_L6-L12.md](14_Final_QuestionBank_L6-L12.md) | Final practice answers + formula sheet + traps |
+| [STUDY_GUIDE_L6-L12_Rest_of_Course.md](STUDY_GUIDE_L6-L12_Rest_of_Course.md) | Full combined L6–L12 guide |
+
 ## Suggested order
 
 1. Parts 1 → 2 → 3, then L1–L3 question bank  
 2. Parts 4 → 5, then L4–L5 question bank  
-3. Night before: formula sheets + traps only  
+3. Parts 6 → 7 → 8 → 9 → 10 → 12, then Final L6–L12 bank  
+4. Night before: all three formula/trap sheets only  
 
 ## Rule
 
-Only read these docs for the covered lectures — they were built from the actual course materials and worked examples were verified in code where possible.
+Only read these docs for the covered lectures — they were built from the actual course materials and worked examples were verified in code where possible (Lab 6 k-means, GA fitness corrections, etc.).
