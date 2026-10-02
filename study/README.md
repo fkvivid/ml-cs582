@@ -41,6 +41,15 @@ Ultimate exam review built from **your course slides, labs, and Marsland textboo
 3. Parts 6 → 7 → 8 → 9 → 10 → 12, then Final L6–L12 bank  
 4. Night before: all three formula/trap sheets only  
 
+## Practice with answers (in this folder)
+
+| File | Contents |
+|------|----------|
+| [MidTerm_Practice_WITH_ANSWERS.md](MidTerm_Practice_WITH_ANSWERS.md) | Midterm practice + answers |
+| [Final_Practice_WITH_ANSWERS.md](Final_Practice_WITH_ANSWERS.md) | Final practice + answers |
+
+*(Blank work sheets stay outside `study/`: `../MidTerm_Practice_NO_ANSWERS.md`, `../Final_Practice_NO_ANSWERS.md`.)*
+
 ## Rule
 
 Only read these docs for the covered lectures — they were built from the actual course materials and worked examples were verified in code where possible (Lab 6 k-means, GA fitness corrections, etc.).
