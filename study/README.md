@@ -32,6 +32,7 @@ Ultimate exam review built from **your course slides, labs, and Marsland textboo
 | [12_Part10_DecisionTrees_Bayes.md](12_Part10_DecisionTrees_Bayes.md) | Lecture 10 — Entropy, IG, Gini, RF + Bayes / Naive Bayes |
 | [13_Part12_Deep_Learning.md](13_Part12_Deep_Learning.md) | Lecture 12 — AE, sparsity, RBM/DBN, CNN, ReLU, pool, FC |
 | [14_Final_QuestionBank_L6-L12.md](14_Final_QuestionBank_L6-L12.md) | Final practice answers + formula sheet + traps |
+| [15_FINAL_EXAM_ESSENTIALS.md](15_FINAL_EXAM_ESSENTIALS.md) | **Night-before:** predicted real-final must-knows + all key formulas |
 | [STUDY_GUIDE_L6-L12_Rest_of_Course.md](STUDY_GUIDE_L6-L12_Rest_of_Course.md) | Full combined L6–L12 guide |
 
 ## Suggested order
@@ -39,7 +40,7 @@ Ultimate exam review built from **your course slides, labs, and Marsland textboo
 1. Parts 1 → 2 → 3, then L1–L3 question bank  
 2. Parts 4 → 5, then L4–L5 question bank  
 3. Parts 6 → 7 → 8 → 9 → 10 → 12, then Final L6–L12 bank  
-4. Night before: all three formula/trap sheets only  
+4. Night before: **[15_FINAL_EXAM_ESSENTIALS.md](15_FINAL_EXAM_ESSENTIALS.md)** then formula/trap sheets only  
 
 ## Practice with answers (in this folder)
 
